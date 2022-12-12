@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>Open weather map API</title>
+		<style>
+            #demo{
+                display: flex;
+                flex-direction: column;
+            }
+            .title{
+                font-size:2vw;
+                font-weight: 700;
+            }
+			.temp{
+                font-size:1.5vw;
+                font-weight: 700;
+            }
+		</style>
+	</head>
+	<body>
+		<div id="demo">
+			<h1 class="title">Meteo NewYork</h1>
+			<p>Ville : {{cityWeatherDatas.name}}</p>
+            <p class="temp">{{cityWeatherDatas.main.temp}} °C</p>
+            <p class="temp">{{cityWeatherDatas.wind.speed}} km/h</p>
+            <p>Temps: {{cityWeatherDatas.weather[0].description}}</p>
+			
+		</div>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script src="https://unpkg.com/vue@3"></script>
+		<script>
+			const apiURL =
+				"https://api.openweathermap.org/data/2.5/weather?lat=40.73&lon=-74.00&appid=4d344860a813f0165f921f589cb7285d&units=metric&lang=fr";
+			const config = {
+			};
+
+			Vue.createApp({
+				data() {
+					return {
+						cityWeatherDatas: null
+					};
+				},
+
+				created: function () {
+					this.fetchDataPromise();
+				},
+
+				methods: {
+					fetchDataPromise: function () {
+						const self = this;
+						axios
+							.get(apiURL + config)
+							.then((response) => {
+								console.log(response.data);
+								self.cityWeatherDatas = response.data;
+							})
+							.catch(function (error) {
+								console.log(error);
+							});
+					},
+				},
+			}).mount("#demo");
+		</script>
+	</body>
+</html>

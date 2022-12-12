@@ -4,10 +4,13 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
 		<title>Open weather map API</title>
+        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 		<style>
             #demo{
                 display: flex;
                 flex-direction: column;
+                margin: 10vh auto;
+                align-items: center;
             }
             .title{
                 font-size:2vw;
@@ -17,17 +20,34 @@
                 font-size:1.5vw;
                 font-weight: 700;
             }
+            .row{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
 		</style>
 	</head>
 	<body>
 		<div id="demo">
 			<h1 class="title">Meteo NewYork</h1>
 			<p>Ville : {{cityWeatherDatas.name}}</p>
-            <p class="temp">{{cityWeatherDatas.main.temp}} °C</p>
-            <p class="temp">{{cityWeatherDatas.wind.speed}} km/h</p>
+            <div class="row">
+                <i class="uil uil-temperature"></i>
+                <p class="temp">{{cityWeatherDatas.main.temp}} °C</p>
+            </div>
+            <img src="'http://openweathermap.org/img/wn/{{cityWeatherDatas.weather.icon}}.png' "/>
+            <p class="temp"><span style="font-size:1vw">Ressenti</span> {{cityWeatherDatas.main.feels_like}}°C</p>
+            <div class="row">
+                <i class="uil uil-wind"></i>
+                <p class="temp">Vitesse du vent: {{cityWeatherDatas.wind.speed}} km/h</p>
+            </div>
+            <div class="row">
+                <i class="uil uil-tear"></i>
+                <p class="temp">Humidité: {{cityWeatherDatas.main.humidity}}%</p>
+            </div>
             <p>Temps: {{cityWeatherDatas.weather[0].description}}</p>
-			
 		</div>
+
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<script src="https://unpkg.com/vue@3"></script>
 		<script>

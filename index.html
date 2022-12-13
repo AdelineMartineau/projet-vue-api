@@ -5,80 +5,90 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
 		<title>Open weather map API</title>
         <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-		<style>
-            #demo{
-                display: flex;
-                flex-direction: column;
-                margin: 10vh auto;
-                align-items: center;
-            }
-            .title{
-                font-size:2vw;
-                font-weight: 700;
-            }
-			.temp{
-                font-size:1.5vw;
-                font-weight: 700;
-            }
-            .row{
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-            }
-		</style>
+		<link rel="stylesheet" href="index.css">
 	</head>
 	<body>
 		<div id="demo">
-			<h1 class="title">Meteo NewYork</h1>
-			<p>Ville : {{cityWeatherDatas.name}}</p>
-            <div class="row">
-                <i class="uil uil-temperature"></i>
-                <p class="temp">{{cityWeatherDatas.main.temp}} °C</p>
-            </div>
-            <img src="'http://openweathermap.org/img/wn/{{cityWeatherDatas.weather.icon}}.png' "/>
-            <p class="temp"><span style="font-size:1vw">Ressenti</span> {{cityWeatherDatas.main.feels_like}}°C</p>
-            <div class="row">
-                <i class="uil uil-wind"></i>
-                <p class="temp">Vitesse du vent: {{cityWeatherDatas.wind.speed}} km/h</p>
-            </div>
-            <div class="row">
-                <i class="uil uil-tear"></i>
-                <p class="temp">Humidité: {{cityWeatherDatas.main.humidity}}%</p>
-            </div>
-            <p>Temps: {{cityWeatherDatas.weather[0].description}}</p>
+			<div id="main" v-if="cityWeatherDatas">
+				<input id="search-bar" type="text" v-model="cityName" @keypress="fetchWeather" placeholder="Recherchez une ville"/>
+				<p class="">{{cityName}}, {{cityWeatherDatas.sys.country}}</p>
+				<img v-bind:src="`http://openweathermap.org/img/w/${cityWeatherDatas.weather[0].icon}.png`"/>
+				<p>{{currentDate()}}</p>
+				
+	
+				<p>{{cityWeatherDatas.weather[0].description}}</p>
+				<div class="row">
+					<i class="uil uil-temperature"></i>
+					<p class="">{{cityWeatherDatas.main.temp}} °C</p>
+				</div>
+
+	
+				<p class=""><span style="font-size:1vw">Ressenti</span> {{cityWeatherDatas.main.feels_like}}°C</p>
+	
+				<div class="row">
+					<i class="uil uil-wind"></i>
+					<p class="">{{cityWeatherDatas.wind.speed}} km/h</p>
+				</div>
+	
+				<div class="row">
+					<i class="uil uil-tear"></i>
+					<p class="">{{cityWeatherDatas.main.humidity}}%</p>
+				</div>
+			</div>
 		</div>
 
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<script src="https://unpkg.com/vue@3"></script>
 		<script>
-			const apiURL =
-				"https://api.openweathermap.org/data/2.5/weather?lat=40.73&lon=-74.00&appid=4d344860a813f0165f921f589cb7285d&units=metric&lang=fr";
-			const config = {
-			};
+			const apiKey="4d344860a813f0165f921f589cb7285d";
+			const baseApiURL ="https://api.openweathermap.org/data/2.5/";
 
 			Vue.createApp({
 				data() {
 					return {
-						cityWeatherDatas: null
+						cityWeatherDatas: null,
+						cityName:'paris'
 					};
 				},
 
-				created: function () {
-					this.fetchDataPromise();
+				created : function () {
+					this.fetchWeatherInfos();
 				},
+				//watch: {
+					//cityName: "fetchWeatherInfos",
+				//},
 
 				methods: {
-					fetchDataPromise: function () {
+					fetchWeatherInfos: function () {
 						const self = this;
 						axios
-							.get(apiURL + config)
+							.get(`${baseApiURL}weather?q=${this.cityName}&APPID=${apiKey}&units=metric&lang=fr`)
 							.then((response) => {
 								console.log(response.data);
 								self.cityWeatherDatas = response.data;
 							})
 							.catch(function (error) {
-								console.log(error);
+								console.info(error);
 							});
+					},
+					//fetchWeatherInfos: async function () {
+					 	//try {
+					   	//const response = await axios.get(`${baseApiURL}weather?q=${this.cityName}&APPID=${apiKey}&units=metric&lang=fr`)
+					 	  //this.cityWeatherDatas = response.data
+					        //console.log(self.cityWeatherDatas[0].html_url);
+					  // } catch(error) {
+					     //console.log(error);
+					   //}
+					//},
+					currentDate() {
+						const current = new Date();
+						const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+						return date;
+					},
+					 fetchWeather (e) {
+						if (e.key == "Enter") {
+							this.fetchWeatherInfos()
+						}
 					},
 				},
 			}).mount("#demo");

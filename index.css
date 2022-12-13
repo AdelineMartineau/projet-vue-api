@@ -1,0 +1,46 @@
+html, body{
+    background-color: whitesmoke;
+    color: white;
+    margin:0;
+    padding:0;
+    height:100vh;
+}
+
+#demo{
+    display: flex;
+}
+
+#main{
+    display: flex;
+    flex-direction: column;
+    margin: 10vh auto;
+    height:70vh;
+    align-items: center;
+    background-color: rgb(144, 182, 200);
+    width:18%;
+    padding:2vw 1vw;
+    border-radius: 1vw;
+}
+
+#search-bar{
+    width: 70%;
+    background-color: white;
+    height: 3vh;
+    border: none;
+    border-radius: 3vw;
+    padding: 0.5vw 1vw;
+}
+
+.title{
+    font-size:2vw;
+    font-weight: 700;
+}
+.temp{
+    font-size:1.5vw;
+    font-weight: 700;
+}
+.row{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

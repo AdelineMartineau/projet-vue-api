@@ -115,7 +115,7 @@ button{
 .day{
     display: flex;
     flex-direction: column;
-    width: 10vw;
+    width: 9.5vw;
     text-transform: capitalize;
     border-radius: 1vw;
     align-items: center;
@@ -123,6 +123,8 @@ button{
     margin: 0 0.5vw;
     font-size: 0.9vw;
     background-color: rgba(255, 255, 255, 0.022);
+    gap: 15px;
+    padding: 0.2vw;
 }
 
 .img{
@@ -145,8 +147,12 @@ p{
     font-weight: bold;
 }
 
-.cityName{
+.date{
     margin-top: 1vw;
+}
+
+.cityName{
+    margin-top: 0.5vw;
     font-weight: 700;
 }
 
@@ -157,7 +163,7 @@ p{
 
 .description{
     text-transform: capitalize;
-    font-size: 1.5vw;
-    margin-top: 4vw;
+    font-size: 1.3vw;
+    margin-top: 3vw;
     font-weight: bold;
 }

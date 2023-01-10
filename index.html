@@ -25,7 +25,7 @@
 					<p class="description">{{cityWeatherForecast.list[0].weather[0].description}}</p>
 				</div>
 				<div class="right">
-					<div class="header">
+					<div class="header" v-if="cityWeatherForecast">
 						<div class="header_info">
 							<span>Ressenti</span>
 							<div class="infos">
@@ -48,6 +48,7 @@
 							</div>
 						</div>
 					</div>
+					<div v-else>loader</div>
 					<div class="wrapper" v-if="cityWeatherDaily">
 						<div v-for="(day, index) in cityWeatherDaily.daily">
 							<div class="day" v-if="index > 0">
@@ -64,6 +65,7 @@
 							</div>
 						</div>
 					</div>
+					<div v-else>loader</div>
 				</div>
 			</div>
 		</div>
